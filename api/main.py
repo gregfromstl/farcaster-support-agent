@@ -52,14 +52,14 @@ async def root(query: Query):
 		limit=5,                         # number of records to return
 		filters={"v": {"$eq": 1}}, # metadata filters
 	)
-
-	print(docs_search_result)
+	vx.disconnect()
 
 	url: str = os.environ.get("SUPABASE_URL")
 	key: str = os.environ.get("SUPABASE_KEY")
 	supabase: Client = create_client(url, key)
 	docs_results = supabase.table('docs').select("*").in_("hash", docs_search_result).execute()
 	questions_results = supabase.table('docs').select("*").in_("hash", questions_search_result).execute()
+	supabase.auth.sign_out()
 
 	context = [item['content'] for item in [*questions_results.data, *docs_results.data]]
 	

@@ -59,7 +59,7 @@ async def root(query: Query):
 	supabase: Client = create_client(url, key)
 	docs_results = supabase.table('docs').select("*").in_("hash", docs_search_result).execute()
 	questions_results = supabase.table('docs').select("*").in_("hash", questions_search_result).execute()
-	supabase.auth.sign_out()
+	
 
 	context = [item['content'] for item in [*questions_results.data, *docs_results.data]]
 	
@@ -73,6 +73,9 @@ async def root(query: Query):
 			{"role": "user", "content": message}
 		]
 	)
+
+	supabase.table("responses").insert([{"query": message, "response": answer.choices[0].message.content}]).execute()
+	supabase.auth.sign_out()
 
 	return {"message": answer.choices[0].message.content}
 	

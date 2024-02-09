@@ -33,7 +33,8 @@ def create_embeddings_from_markdown(file_path):
 		chunks = re.split(r'(?m)^(?:#{1,2}\s)', content, flags=re.MULTILINE)
 		chunks = list(dict.fromkeys([chunk for chunk in chunks if chunk.strip()]))
 
-		vx = vecs.create_client("postgresql://postgres:postgres@localhost:54322/postgres")
+		SUPABASE_CONNECTION_STRING: str = os.environ.get("SUPABASE_CONNECTION_STRING")
+		vx = vecs.create_client(SUPABASE_CONNECTION_STRING)
 		docs = vx.get_or_create_collection(name="docs", dimension=64)
 		questions = vx.get_or_create_collection(name="questions", dimension=64)
 		url: str = os.environ.get("SUPABASE_URL")

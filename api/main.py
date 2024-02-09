@@ -41,7 +41,7 @@ async def root(query: Query):
 	vx = vecs.create_client(SUPABASE_CONNECTION_STRING)
 
 	docs = vx.get_or_create_collection(name="docs", dimension=64)
-	questions = vx.get_or_create_collection(name="docs", dimension=64)
+	questions = vx.get_or_create_collection(name="questions", dimension=64)
 	docs_search_result = docs.query(
 		data=embedding.data[0].embedding,      # required
 		limit=5,                         # number of records to return
@@ -53,12 +53,14 @@ async def root(query: Query):
 		filters={"v": {"$eq": 1}}, # metadata filters
 	)
 
+	print(docs_search_result)
+
 	url: str = os.environ.get("SUPABASE_URL")
 	key: str = os.environ.get("SUPABASE_KEY")
 	supabase: Client = create_client(url, key)
 	docs_results = supabase.table('docs').select("*").in_("hash", docs_search_result).execute()
 	questions_results = supabase.table('docs').select("*").in_("hash", questions_search_result).execute()
-	
+
 	context = [item['content'] for item in [*questions_results.data, *docs_results.data]]
 	
 	answer = client.chat.completions.create(

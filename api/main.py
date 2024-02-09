@@ -44,12 +44,12 @@ async def root(query: Query):
 	questions = vx.get_or_create_collection(name="questions", dimension=64)
 	docs_search_result = docs.query(
 		data=embedding.data[0].embedding,      # required
-		limit=5,                         # number of records to return
+		limit=3,                         # number of records to return
 		filters={"v": {"$eq": 1}}, # metadata filters
 	)
 	questions_search_result = questions.query(
 		data=embedding.data[0].embedding,      # required
-		limit=10,                         # number of records to return
+		limit=5,                         # number of records to return
 		filters={"v": {"$eq": 1}}, # metadata filters
 	)
 

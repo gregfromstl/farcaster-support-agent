@@ -78,8 +78,8 @@ export async function GET(request: NextRequest) {
                                     questions based on the Farcaster docs.
                                 </div>
                                 <div style={{ display: "flex" }}>
-                                    Click "Chat in Converse" to talk to the
-                                    agent via XMTP, powered by Operator.
+                                    Click &quot;Chat in Converse&quot; to talk
+                                    to the agent via XMTP, powered by Operator.
                                 </div>
                             </div>
                         )}

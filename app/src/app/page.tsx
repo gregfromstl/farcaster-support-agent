@@ -19,7 +19,6 @@ async function getResponse(query: string) {
         );
         return response.data.message;
     } catch {
-        console.log("TIMED OUT");
         return "It took too long to answer that! Try again, or chat in Converse.";
     }
 }

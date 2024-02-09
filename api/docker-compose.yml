@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  agent-api:
+    build: .
+    ports:
+    # <the port on the host machine you want to map to the docker container, like your VM you deploy to>:<the port you run your api on in the docker container, check your dockerfile for this>
+      - "8080:8080"
+    env_file:
+      - ./.env
+  xmtp-service:
+    build: ./xmtp-service
+    working_dir: /app
+    env_file:
+      - ./.env

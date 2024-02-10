@@ -17,6 +17,7 @@ async function getResponse(query: string) {
             },
             { timeout: 4000 }
         );
+        console.log(response.data.message);
         return response.data.message;
     } catch {
         return "It took too long to answer that! Try again, or chat in Converse.";

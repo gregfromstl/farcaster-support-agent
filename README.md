@@ -1,4 +1,4 @@
-### Tldr
+### TLDR
 The Farcaster Support Agent is trained on the Farcaster docs and answers users' questions about the protocol in-frame.
 
 # Overview
